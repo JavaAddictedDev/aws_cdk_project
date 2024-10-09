@@ -4,7 +4,7 @@ import software.amazon.awscdk.App;
 import software.amazon.awscdk.Environment;
 import software.amazon.awscdk.StackProps;
 
-import java.util.Arrays;
+import software.amazon.awscdk.services.ec2.Vpc;
 
 public class AwsCdkSandboxApp {
 
@@ -16,9 +16,9 @@ public class AwsCdkSandboxApp {
                         .region("us-east-2")
                         .build())
                 .build();
-        
-        new VpcStack(app, "Vpc", vpcProps);
-
+        VpcStack vpcStack = new VpcStack(app, "Vpc", vpcProps);
+        Vpc vpc = vpcStack.getInstance();
+        new ClusterStack(app, "Cluster", vpc);
         app.synth();
     }
 }
