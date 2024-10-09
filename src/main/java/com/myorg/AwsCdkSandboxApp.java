@@ -11,7 +11,13 @@ public class AwsCdkSandboxApp {
     public static void main(final String[] args) {
         App app = new App();
 
-        new VpcStack(app, "Vpc");
+        StackProps vpcProps = StackProps.builder()
+                .env(Environment.builder()
+                        .region("us-east-2")
+                        .build())
+                .build();
+        
+        new VpcStack(app, "Vpc", vpcProps);
 
         app.synth();
     }
