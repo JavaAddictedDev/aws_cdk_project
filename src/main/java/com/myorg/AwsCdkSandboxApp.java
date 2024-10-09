@@ -16,9 +16,13 @@ public class AwsCdkSandboxApp {
                         .region("us-east-2")
                         .build())
                 .build();
+        
         VpcStack vpcStack = new VpcStack(app, "Vpc", vpcProps);
-        Vpc vpc = vpcStack.getInstance();
-        new ClusterStack(app, "Cluster", vpc);
+        
+        ClusterStack clusterStack = new ClusterStack(app, "Cluster", vpcStack.getInstance());
+        
+        clusterStack.addDependency(vpcStack);
+        
         app.synth();
     }
 }
