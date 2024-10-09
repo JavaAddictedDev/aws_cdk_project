@@ -14,17 +14,23 @@ import software.constructs.Construct;
  * @author rengoku
  */
 public class VpcStack extends Stack {
-    
+
+    private Vpc instance;
+
     public VpcStack(final Construct scope, final String id) {
         this(scope, id, null);
     }
-    
+
     public VpcStack(final Construct scope, final String id, final StackProps props) {
         super(scope, id, props);
-        
-        Vpc.Builder.create(this, "Vpc01")
+
+        instance = Vpc.Builder.create(this, "Vpc01")
                 .maxAzs(2)
                 .natGateways(0)
                 .build();
+    }
+
+    public Vpc getInstance() {
+        return instance;
     }
 }
