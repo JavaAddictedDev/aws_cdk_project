@@ -15,7 +15,7 @@ import software.constructs.Construct;
  */
 public class VpcStack extends Stack {
 
-    private Vpc instance;
+    private Vpc vpc;
 
     public VpcStack(final Construct scope, final String id) {
         this(scope, id, null);
@@ -24,13 +24,13 @@ public class VpcStack extends Stack {
     public VpcStack(final Construct scope, final String id, final StackProps props) {
         super(scope, id, props);
 
-        instance = Vpc.Builder.create(this, "Vpc01")
+        vpc = Vpc.Builder.create(this, "Vpc01")
                 .maxAzs(2)
                 .natGateways(0)
                 .build();
     }
 
-    public Vpc getInstance() {
-        return instance;
+    public Vpc getVpc() {
+        return vpc;
     }
 }
