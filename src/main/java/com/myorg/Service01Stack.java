@@ -10,17 +10,18 @@ import software.amazon.awscdk.services.ecs.ContainerImage;
 import software.amazon.awscdk.services.ecs.LogDriver;
 import software.amazon.awscdk.services.ecs.patterns.ApplicationLoadBalancedFargateService;
 import software.amazon.awscdk.services.ecs.patterns.ApplicationLoadBalancedTaskImageOptions;
+import software.amazon.awscdk.services.elasticloadbalancingv2.HealthCheck;
 import software.amazon.awscdk.services.logs.LogGroup;
 
 public class Service01Stack extends Stack {
-    
+
     public Service01Stack(final Construct scope, final String id, Cluster cluster) {
         this(scope, id, cluster, null);
     }
-    
+
     public Service01Stack(final Construct scope, final String id, Cluster cluster, final StackProps props) {
         super(scope, id, props);
-        
+
         ApplicationLoadBalancedFargateService service01 = ApplicationLoadBalancedFargateService.Builder.create(this, "ALB01").
                 serviceName("service-01")
                 .cluster(cluster)
@@ -47,5 +48,12 @@ public class Service01Stack extends Stack {
                                 .build())
                 .publicLoadBalancer(Boolean.TRUE)
                 .build();
+
+        service01.getTargetGroup().configureHealthCheck(
+                HealthCheck.builder()
+                        .path("/actuator/health")
+                        .port("8080")
+                        .healthyHttpCodes("200").build()
+        );
     }
 }
