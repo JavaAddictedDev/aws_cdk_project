@@ -65,11 +65,11 @@ public class Service01Stack extends Stack {
                         .minCapacity(2)
                         .maxCapacity(4)
                         .build());
-        
+
         scalableTaskCount.scaleOnCpuUtilization("Service01AutoScaling", CpuUtilizationScalingProps.builder()
-        .targetUtilizationPercent(50)
-        .scaleInCooldown(Duration.seconds(60))
-        .scaleOutCooldown(Duration.seconds(60))
-        .build());
+                .targetUtilizationPercent(50)
+                .scaleInCooldown(Duration.seconds(60))
+                .scaleOutCooldown(Duration.seconds(60))
+                .build());
     }
 }

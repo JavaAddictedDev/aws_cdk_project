@@ -20,10 +20,9 @@ public class AwsCdkSandboxApp {
         VpcStack vpcStack = new VpcStack(app, "Vpc", props);
 
         ClusterStack clusterStack = new ClusterStack(app, "Cluster", vpcStack.getVpc(), props);
-
         clusterStack.addDependency(vpcStack);
-        
-        Service01Stack service01Stack = new Service01Stack(app, "Service01",  clusterStack.getCluster());
+
+        Service01Stack service01Stack = new Service01Stack(app, "Service01", clusterStack.getCluster(), props);
         service01Stack.addDependency(clusterStack);
 
         app.synth();
